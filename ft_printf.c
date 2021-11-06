@@ -11,14 +11,24 @@
 /* ************************************************************************** */
 
 #include <stdarg.h>
+#include <unistd.h>
 
 int	ft_printf(const char *format, ...)
 {
 	va_list	strings;
+	int		i;
+
 	va_start(strings, format);
-	while ()
+	while (str[i] != '\0')
 	{
-//		main logic applied to string, received as an argument of ft_printf;
+		if (str[i] == '%')
+		{
+			if (str[i + 1] == '%')
+			{
+				write(1, str[i + 1], 1);
+			}
+		}
+//		write
 	}
 	va_end(strings);
 	return (0);
