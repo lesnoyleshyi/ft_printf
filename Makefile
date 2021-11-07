@@ -12,18 +12,28 @@
 
 NAME	=	libftprintf.a
 
-SRCS	=	ft_printf.c
+SRCS	=	ft_printf.c	ft_putnbr_base.c
 
 OBJS	=	${SRCS:.c=.o}
 
-%.o		:	%.c
-			gcc -Wall -Werror -Wextra $< -c
+CFLAGS	=	-Wall -Wextra -Werror
+
+%.o		:	%.c libft/libft.h
+			gcc -Wall -Werror -Wextra -g $< -c
 
 ${NAME}	:	${OBJS}
-			ar rcs $?
+			ar rc ${NAME} $?
 
 all		:	${NAME}
 
+mklibft	:
+			cd libft && make
+
+build	:	all mklibft
+			gcc ${CFLAGS} test_m.c libft/libft.a ${NAME} -o test_m
+
+debug	: all mklibft
+			gcc ${CFLAGS} -g test_m.c libft/libft.a ${NAME} -o test_m
 clean	:
 			rm -rf ${OBJS}
 

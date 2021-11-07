@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdarg.h>
-#include <unistd.h>
 #include "ft_printf.h"
+
+#include <stdio.h>
 
 int	ft_printf(const char *format, ...)
 {
@@ -20,52 +20,57 @@ int	ft_printf(const char *format, ...)
 	int		i;
 
 	va_start(ap, format);
-	while (str[i] != '\0')
+	i = 0;
+	while (format[i] != '\0')
 	{
-		if (str[i] == '%')
+		if (format[i] == '%')
 		{
-			if (str[i + 1] == '%')
+			if (format[i + 1] == '%')
 			{
-				write(1, str[++i], 1);
+				write(1, &format[++i], 1);
 				i++;
 			}
-			else if (str[i + 1] == 'c')
+			else if (format[i + 1] == 'c')
 			{
 				ft_putchar_fd(va_arg(ap, int), 1);
 				i += 2;
 			}
-			else if (str[i + 1] == 's')
+			else if (format[i + 1] == 's')
 			{
 				ft_putstr_fd(va_arg(ap, char *), 1);
 				i += 2;
 			}
-			else if (str[i + 1] == 'p')
+			else if (format[i + 1] == 'p')
 			{
-				ft_putnbrbase(va_arg(ap, void *));
+				ft_putnbr_base((unsigned long long)va_arg(ap, void *), "0123456789abcdef");
 				i += 2;
 			}
-			else if (str[i + 1] == 'd' || str[i + 1] == 'i')
+			else if (format[i + 1] == 'd' || format[i + 1] == 'i')
 			{
-				ft_itoa(va_arg(strings, int));
+				ft_putstr_fd(ft_itoa(va_arg(ap, long int)), 1);
 				i += 2;
 			}
-			else if (str[i + 1] == 'u')
+			else if (format[i + 1] == 'u')
 			{
-				ft_print_unsint(va_arg(strings, unsigned long), 1);
+				ft_putnbr_base(va_arg(ap, unsigned long long), "0123456789");
 				i += 2;
 			}
-			else if (str[i + 1] == 'x' || str[i + 1] == 'X')
+			else if (format[i + 1] == 'x' || format[i + 1] == 'X')
 			{
-				ft_print_hex(va_arg(strings, unsigned long), 1);
+				if (format[i + 1] == 'x')
+					ft_putnbr_base(va_arg(ap, unsigned long), "0123456789abcdef");
+				else
+					ft_putnbr_base(va_arg(ap, unsigned long), "0123456789ABCDEF");
 				i += 2;
 			}
 			else
 			{
-				i += ft_skip_spaces(void);
+//				i += ft_skip_spaces(void);
+				write(1, "skip ", 5);
 			}
 		}
-		write(1, str[i++], 1);
+		write(1, &format[i++], 1);
 	}
 	va_end(ap);
-	return (0);
+	return (i);
 }
