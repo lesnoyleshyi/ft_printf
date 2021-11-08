@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_putnbr_base_i.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stycho <stycho@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/07 12:21:02 by stycho            #+#    #+#             */
-/*   Updated: 2021/11/07 12:22:30 by stycho           ###   ########.fr       */
+/*   Created: 2021/11/08 16:06:25 by stycho            #+#    #+#             */
+/*   Updated: 2021/11/08 16:06:27 by stycho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
-# include "./libft/libft.h"
+#include "ft_printf.h"
 
-# include <stdarg.h>
-int		ft_printf(const char *format, ...);
-int		ft_putnbr_base_i(unsigned long long nbr, const char *base);
-int		ft_choose_func(char specifier, va_list sec_args);
-int		ft_putchar_i(char c);
-int		ft_putstr_i(char *s);
+int	ft_putnbr_base_i(unsigned long long nbr, const char *base)
+{
+	size_t	base_len;
+	int		i;
 
-#endif
+	if (!base)
+		return (0);
+	i = 1;
+	base_len = ft_strlen(base);
+	if (nbr / base_len != 0)
+	{
+		i += ft_putnbr_base_i(nbr / base_len, base);
+		write(1, &base[nbr % base_len], 1);
+	}
+	else
+		write(1, &base[nbr], 1);
+	return (i);
+}

@@ -18,59 +18,24 @@ int	ft_printf(const char *format, ...)
 {
 	va_list	ap;
 	int		i;
+	int		len;
 
 	va_start(ap, format);
 	i = 0;
+	len = 0;
 	while (format[i] != '\0')
 	{
 		if (format[i] == '%')
 		{
-			if (format[i + 1] == '%')
-			{
-				write(1, &format[++i], 1);
-				i++;
-			}
-			else if (format[i + 1] == 'c')
-			{
-				ft_putchar_fd(va_arg(ap, int), 1);
-				i += 2;
-			}
-			else if (format[i + 1] == 's')
-			{
-				ft_putstr_fd(va_arg(ap, char *), 1);
-				i += 2;
-			}
-			else if (format[i + 1] == 'p')
-			{
-				ft_putnbr_base((unsigned long long)va_arg(ap, void *), "0123456789abcdef");
-				i += 2;
-			}
-			else if (format[i + 1] == 'd' || format[i + 1] == 'i')
-			{
-				ft_putstr_fd(ft_itoa(va_arg(ap, long int)), 1);
-				i += 2;
-			}
-			else if (format[i + 1] == 'u')
-			{
-				ft_putnbr_base(va_arg(ap, unsigned long long), "0123456789");
-				i += 2;
-			}
-			else if (format[i + 1] == 'x' || format[i + 1] == 'X')
-			{
-				if (format[i + 1] == 'x')
-					ft_putnbr_base(va_arg(ap, unsigned long), "0123456789abcdef");
-				else
-					ft_putnbr_base(va_arg(ap, unsigned long), "0123456789ABCDEF");
-				i += 2;
-			}
-			else
-			{
-//				i += ft_skip_spaces(void);
-				write(1, "skip ", 5);
-			}
+			len += ft_choose_func(format[i + 1], ap);
+			i += 2;
 		}
-		write(1, &format[i++], 1);
+		else
+		{
+			len += (int)write(1, &format[i], 1);
+			i += 1;
+		}
 	}
 	va_end(ap);
-	return (i);
+	return (len);
 }

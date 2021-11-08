@@ -12,7 +12,7 @@
 
 NAME	=	libftprintf.a
 
-SRCS	=	ft_printf.c	ft_putnbr_base.c
+SRCS	=	ft_printf.c	ft_putnbr_base_i.c	ft_putchar_i.c	ft_putstr_i.c
 
 OBJS	=	${SRCS:.c=.o}
 
@@ -34,6 +34,10 @@ build	:	all mklibft
 
 debug	: all mklibft
 			gcc ${CFLAGS} -g test_m.c libft/libft.a ${NAME} -o test_m
+
+debug_putnbr	: all mklibft
+				gcc ${CFLAGS} -g test_ft_putnbr_base.c libft/libft.a ${NAME} -o test_putnbr
+
 clean	:
 			rm -rf ${OBJS}
 
