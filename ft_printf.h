@@ -13,12 +13,10 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 # include "./libft/libft.h"
-
 # include <stdarg.h>
 int		ft_printf(const char *format, ...);
 int		ft_putnbr_base_i(unsigned long long nbr, const char *base);
 int		ft_choose_func(char specifier, va_list sec_args);
 int		ft_putchar_i(char c);
 int		ft_putstr_i(char *s);
-
 #endif
