@@ -26,7 +26,7 @@ int	ft_choose_func(char specifier, va_list sec_args)
 		return (ft_putnbr_base_i((unsigned long long) va_arg(sec_args, void *), "0123456789abcdef") + 2);
 	}
 	if (specifier == 'd' || specifier == 'i')
-		return (ft_putstr_i(ft_itoa(va_arg(sec_args, long int))));
+		return (ft_printint(va_arg(sec_args, long int)));
 	if (specifier == 'u')
 		return (ft_putnbr_base_i(va_arg(sec_args, unsigned int), "0123456789"));
 	if (specifier == 'x')

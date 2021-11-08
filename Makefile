@@ -12,47 +12,36 @@
 
 NAME		=	libftprintf.a
 
-LIBFT_PATH	=	./libft
-
 SRCS		=	ft_putnbr_base_i.c	ft_printf.c	ft_putchar_i.c	ft_putstr_i.c\
-				ft_choose_func.c
+				ft_choose_func.c	ft_strlen.c	ft_printint.c
 
 OBJS		=	$(SRCS:.c=.o)
 
 CFLAGS		=	-Wall -Wextra -Werror
 
-%.o			:	%.c ft_printf.h
-				gcc ${CFLAGS} -c $< -o $@
+%.o		:	%.c ft_printf.h
+			gcc ${CFLAGS} -c $< -o $@
 
-${NAME}		:	${OBJS}
-				cp ${LIBFT_PATH}/libft.a ${NAME}
-				ar rcs ${NAME} $?
+${NAME}	:	${OBJS}
+			ar rcs ${NAME} $?
 
-all			:	${NAME}
+all		:	${NAME}
 
-mk_libft	:
-				@${MAKE} -C ${LIBFT_PATH}
+clean	:
+			rm -rf ${OBJS}
 
-test_m		:	all libft.a
-				gcc ${CFLAGS} test_m.c ${NAME} ${LIBFT_PATH}/libft.a -o test_m
+fclean	:	clean
+			rm -rf ${NAME}
 
-debug		: 	all
-				gcc ${CFLAGS} -g test_m.c ${NAME} libft.a -o test_m
+test_m	:	${NAME}
+			gcc ${CFLAGS} test_m.c ${NAME} -o test_m
 
-debug_putnbr:	all
-				gcc ${CFLAGS} -g test_ft_putnbr_base.c ${NAME} libft.a -o test_putnbr
+test_printint	:	${NAME}
+					gcc ${CFLAGS} -g test_ft_print_int.c ft_printint.c -o test_ft_print_int
 
-clean		:
-				rm -rf ${OBJS}
-				@${MAKE} -C ${LIBFT_PATH} clean
+re		: 	fclean all
 
-fclean		:	clean
-				rm -rf ${NAME}
-				@${MAKE} -C ${LIBFT_PATH} fclean
+bonus	:
+			@ echo "I haven't made bonus part"
 
-re			: 	fclean all
-
-bonus		:
-				@ echo "I haven't made bonus part"
-
-.PHONY		:	all clean fclean re bonus
+.PHONY	:	all clean fclean re bonus
