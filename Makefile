@@ -22,14 +22,15 @@ OBJS		=	$(SRCS:.c=.o)
 CFLAGS		=	-Wall -Wextra -Werror
 
 %.o			:	%.c ft_printf.h
-				gcc ${CFLAGS} -g -c $< -o $@
+				gcc ${CFLAGS} -c $< -o $@
 
 ${NAME}		:	${OBJS}
+				cp ${LIBFT_PATH}/libft.a ${NAME}
 				ar rcs ${NAME} $?
 
 all			:	${NAME}
 
-libft.a		:
+mk_libft	:
 				@${MAKE} -C ${LIBFT_PATH}
 
 test_m		:	all libft.a
