@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_i.c                                      :+:      :+:    :+:   */
+/*   ft_putptr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stycho <stycho@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/09 15:32:16 by stycho            #+#    #+#             */
-/*   Updated: 2021/11/09 15:32:17 by stycho           ###   ########.fr       */
+/*   Created: 2021/11/09 15:31:54 by stycho            #+#    #+#             */
+/*   Updated: 2021/11/09 15:31:56 by stycho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_putstr_i(char *s)
+int	ft_putptr(unsigned long long nbr)
 {
-	int	i;
-
-	i = 0;
-	if (s)
-	{
-		while (s[i])
-			write(1, &s[i++], sizeof(char));
-	}
-	else
-		return ((int)write(1, "(null)", 6));
-	return (i);
+	write(1, "0x", 2);
+	return (ft_putnbr_base_i(nbr, "0123456789abcdef") + 2);
 }

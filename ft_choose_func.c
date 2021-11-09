@@ -14,6 +14,8 @@
 
 int	ft_choose_func(char specifier, va_list sec_args)
 {
+	if (specifier == '\0')
+		return (0);
 	if (specifier == '%')
 		return ((int)write(1, &specifier, 1));
 	if (specifier == 'c')
@@ -21,22 +23,18 @@ int	ft_choose_func(char specifier, va_list sec_args)
 	if (specifier == 's')
 		return (ft_putstr_i(va_arg(sec_args, char *)));
 	if (specifier == 'p')
-	{
-		write(1, "0x", 2);
-		return (ft_putnbr_base_i((unsigned long long) va_arg(sec_args, void *), "0123456789abcdef") + 2);
-	}
+		return (ft_putptr(va_arg(sec_args, unsigned long long )));
 	if (specifier == 'd' || specifier == 'i')
 		return (ft_printint(va_arg(sec_args, long int)));
 	if (specifier == 'u')
-		return (ft_putnbr_base_i(va_arg(sec_args, unsigned int), "0123456789"));
+		return (ft_putnbr_base_i(va_arg(sec_args, unsigned int),
+				"0123456789"));
 	if (specifier == 'x')
-		return (ft_putnbr_base_i(va_arg(sec_args, unsigned int), "0123456789abcdef"));
+		return (ft_putnbr_base_i(va_arg(sec_args, unsigned int),
+				"0123456789abcdef"));
 	if (specifier == 'X')
-		return (ft_putnbr_base_i(va_arg(sec_args, unsigned int), "0123456789ABCDEF"));
+		return (ft_putnbr_base_i(va_arg(sec_args, unsigned int),
+				"0123456789ABCDEF"));
 	else
-	{
-//		return (ft_skip_spaces(void));
-		return (write(1, "skip", 5));
-	}
+		return ((int)write(1, &specifier, 1));
 }
-

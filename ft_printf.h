@@ -18,8 +18,9 @@
 int		ft_printf(const char *format, ...);
 int		ft_putnbr_base_i(unsigned long long nbr, const char *base);
 int		ft_choose_func(char specifier, va_list sec_args);
+int		ft_putptr(unsigned long long nbr);
+size_t	ft_strlen(const char *s);
 int		ft_putchar_i(char c);
 int		ft_putstr_i(char *s);
-size_t	ft_strlen(const char *s);
 int		ft_printint(int nbr);
 #endif

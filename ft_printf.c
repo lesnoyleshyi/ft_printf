@@ -18,21 +18,20 @@ int	ft_printf(const char *format, ...)
 	int		i;
 	int		len;
 
-	va_start(ap, format);
+	if (!format)
+		return (0);
 	i = 0;
 	len = 0;
+	va_start(ap, format);
 	while (format[i] != '\0')
 	{
 		if (format[i] == '%')
 		{
 			len += ft_choose_func(format[i + 1], ap);
-			i += 2;
+			i += 1 + (format[i + 1] != '\0');
 		}
 		else
-		{
-			len += (int)write(1, &format[i], 1);
-			i += 1;
-		}
+			len += (int)write(1, &format[i++], 1);
 	}
 	va_end(ap);
 	return (len);

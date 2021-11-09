@@ -25,7 +25,6 @@ int	ft_printint(int nbr)
 		i += ft_printint(nbr / 10);
 		char_repr = (nbr * (1 - 2 * (nbr < 0))) % 10 + '0';
 		write(1, &char_repr, 1);
-
 	}
 	else
 	{
