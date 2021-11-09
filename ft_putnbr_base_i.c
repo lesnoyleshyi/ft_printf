@@ -1,38 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_base_i.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stycho <stycho@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/06 20:26:10 by stycho            #+#    #+#             */
-/*   Updated: 2021/11/06 20:26:15 by stycho           ###   ########.fr       */
+/*   Created: 2021/11/08 16:06:25 by stycho            #+#    #+#             */
+/*   Updated: 2021/11/08 16:06:27 by stycho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *format, ...)
+int	ft_putnbr_base_i(unsigned long long nbr, const char *base)
 {
-	va_list	ap;
+	size_t	base_len;
 	int		i;
-	int		len;
 
-	if (!format)
+	if (!base)
 		return (0);
-	i = 0;
-	len = 0;
-	va_start(ap, format);
-	while (format[i] != '\0')
+	i = 1;
+	base_len = ft_strlen(base);
+	if (nbr / base_len != 0)
 	{
-		if (format[i] == '%')
-		{
-			len += ft_choose_func(format[i + 1], ap);
-			i += 1 + (format[i + 1] != '\0');
-		}
-		else
-			len += (int)write(1, &format[i++], 1);
+		i += ft_putnbr_base_i(nbr / base_len, base);
+		write(1, &base[nbr % base_len], 1);
 	}
-	va_end(ap);
-	return (len);
+	else
+		write(1, &base[nbr], 1);
+	return (i);
 }

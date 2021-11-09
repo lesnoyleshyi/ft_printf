@@ -1,38 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_putstr_i.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stycho <stycho@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/06 20:26:10 by stycho            #+#    #+#             */
-/*   Updated: 2021/11/06 20:26:15 by stycho           ###   ########.fr       */
+/*   Created: 2021/11/09 15:32:16 by stycho            #+#    #+#             */
+/*   Updated: 2021/11/09 15:32:17 by stycho           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *format, ...)
+int	ft_putstr_i(char *s)
 {
-	va_list	ap;
-	int		i;
-	int		len;
+	int	i;
 
-	if (!format)
-		return (0);
 	i = 0;
-	len = 0;
-	va_start(ap, format);
-	while (format[i] != '\0')
+	if (s)
 	{
-		if (format[i] == '%')
-		{
-			len += ft_choose_func(format[i + 1], ap);
-			i += 1 + (format[i + 1] != '\0');
-		}
-		else
-			len += (int)write(1, &format[i++], 1);
+		while (s[i])
+			write(1, &s[i++], sizeof(char));
 	}
-	va_end(ap);
-	return (len);
+	else
+		return ((int)write(1, "(null)", 6));
+	return (i);
 }
