@@ -2,3 +2,5 @@
 /test_putnbr.dSYM/
 *.o
 /test_ft_print_int.dSYM/
+/printfTester/
+test*
